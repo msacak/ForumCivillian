@@ -67,10 +67,40 @@ public class CommentGenerator {
         Comment comment49 = Comment.builder().userId(2L).postId(4L).content("I think vinyl records are making a comeback! They're a great way to appreciate music.") .build();
         Comment comment50 = Comment.builder().userId(3L).postId(4L).content("The way music is consumed has definitely evolved, but live performances are still key.") .build();
 
+
+        //sports comments
+
+        Comment comment51 = Comment.builder().userId(1L).postId(5L).content("Esports is growing faster than traditional sports. Exciting times ahead!").build();
+        Comment comment52 = Comment.builder().userId(2L).postId(5L).content("Definitely! Mobile gaming is a huge factor in this growth.").build();
+        Comment comment53 = Comment.builder().userId(3L).postId(5L).content("Esports could be the future of sports in general!").build();
+        // Add more comments for post1
+
+        // Post 2 comments
+        Comment comment54 = Comment.builder().userId(1L).postId(6L).content("Can't wait to watch these players! Who’s your top pick for 2024?").build();
+        Comment comment55 = Comment.builder().userId(2L).postId(6L).content("I'm watching out for player X. They’ve been killing it this season.").build();
+        Comment comment56 = Comment.builder().userId(3L).postId(6L).content("Football in 2024 is going to be wild! Can’t wait to see the new talent.").build();
+        // Add more comments for post2
+
+        // Post 3 comments
+        Comment comment57 = Comment.builder().userId(1L).postId(7L).content("Basketball in Europe has so much potential! Teams are getting stronger each year.").build();
+        Comment comment58 = Comment.builder().userId(2L).postId(7L).content("I agree. The level of competition in Europe is rising.").build();
+        // Add more comments for post3
+
+        // Post 4 comments
+        Comment comment59 = Comment.builder().userId(1L).postId(8L).content("Track and field athletes truly deserve more recognition. Their discipline is unmatched.").build();
+        Comment comment60 = Comment.builder().userId(2L).postId(8L).content("Absolutely! The amount of work that goes into training is insane.").build();
+        // Add more comments for post4
+
+        // Distribute the remaining comments evenly across the posts
+        Comment comment61 = Comment.builder().userId(3L).postId(5L).content("What’s your favorite esports title to watch?").build();
+        Comment comment62 = Comment.builder().userId(1L).postId(6L).content("I think football in 2024 is going to be all about the next-gen players.").build();
+        // More comments up to comment 50
         return List.of(comment1, comment2, comment3, comment4, comment5, comment6, comment7, comment8, comment9, comment10,
                 comment11, comment12, comment13, comment14, comment15, comment16, comment17, comment18, comment19, comment20,
                 comment21, comment22, comment23, comment24, comment25, comment26, comment27, comment28, comment29, comment30,
                 comment31, comment32, comment33, comment34, comment35, comment36, comment37, comment38, comment39, comment40,
-                comment41, comment42, comment43, comment44, comment45, comment46, comment47, comment48, comment49, comment50);
+                comment41, comment42, comment43, comment44, comment45, comment46, comment47, comment48, comment49, comment50,
+                comment51,comment52,comment53,comment54,comment55,comment56,comment57,comment58,comment59,comment60,comment61,comment62
+        );
     }
 }

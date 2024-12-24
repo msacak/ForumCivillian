@@ -36,7 +36,39 @@ public class PostGenerator {
                 .lastReplier("horns")
                 .build();
 
-        return List.of(post1, post2, post3, post4);
+        Post post5 = Post.builder()
+                .title("The Rise of Esports: A New Era in Competitive Sports")
+                .userId(1L)
+                .topicId(2L)  // Topic ID set to 2L for sports
+                .commentCount(10)
+                .lastReplier("JaneSmith")
+                .build();
+
+        Post post6 = Post.builder()
+                .title("Top 5 Football Players to Watch in 2024")
+                .userId(2L)
+                .topicId(2L)
+                .commentCount(15)
+                .lastReplier("SarahJ")
+                .build();
+
+        Post post7 = Post.builder()
+                .title("Analyzing the Future of Basketball in Europe")
+                .userId(3L)
+                .topicId(2L)
+                .commentCount(12)
+                .lastReplier("AnnaLee")
+                .build();
+
+        Post post8 = Post.builder()
+                .title("Why Track and Field Athletes Are the Unsung Heroes")
+                .userId(1L)
+                .topicId(2L)
+                .commentCount(13)
+                .lastReplier("DavidW")
+                .build();
+
+        return List.of(post1, post2, post3, post4,post5,post6,post7,post8);
 
     }
 }
