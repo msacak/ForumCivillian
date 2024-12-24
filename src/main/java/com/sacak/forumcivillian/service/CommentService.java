@@ -37,12 +37,13 @@ public class CommentService {
         return true;
     }
 
-    public void saveCommentForNewPost(Comment comment) {
-        commentRepository.save(comment);
-    }
 
     public List<VwComment> findAllCommentsOfPost(Long postId) {
-        return commentRepository.findAllCommentsByPostId(postId);
+        return commentRepository.finAllVwCommentsByPostId(postId);
 
+    }
+
+    public void save(Comment comment) {
+        commentRepository.save(comment);
     }
 }

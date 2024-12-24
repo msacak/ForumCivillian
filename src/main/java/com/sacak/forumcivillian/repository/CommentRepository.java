@@ -10,9 +10,9 @@ import java.util.List;
 public interface CommentRepository extends JpaRepository<Comment,Long> {
 
 
-    @Query("SELECT new com.sacak.forumcivillian.views.VwComment(c.id,u.userName,u.userRank,c.content,c.imageUrl) " +
+    @Query("SELECT new com.sacak.forumcivillian.views.VwComment(c.id,u.userName,u.totalComments,u.avatar,u.userRank,c.content,c.imageUrl,c.createAt,c.updateAt) " +
             "FROM Comment c " +
             "JOIN User u ON c.userId=u.id " +
             "WHERE c.postId=?1 ORDER BY c.createAt")
-    List<VwComment> findAllCommentsByPostId(Long postId);
+    List<VwComment> finAllVwCommentsByPostId(Long postId);
 }

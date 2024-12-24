@@ -105,4 +105,8 @@ public class UserService {
     public Optional<User> findById(Long id) {
         return userRepository.findById(id);
     }
+
+    public String findUserNameByUserId(Long userId) {
+        return userRepository.findUsernameByUserId(userId).orElseThrow(()-> new ForumCivillianException(ErrorType.USER_NOT_FOUND));
+    }
 }

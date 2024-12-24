@@ -10,7 +10,11 @@ import lombok.NoArgsConstructor;
 public record VwComment(
         Long id,
         String author,
+        int userTotalComments,
+        String avatar,
         EUserRank userRank,
         String content,
-        String imageUrl
+        String imageUrl,
+        Long createAt,
+        Long updateAt
 ) {}

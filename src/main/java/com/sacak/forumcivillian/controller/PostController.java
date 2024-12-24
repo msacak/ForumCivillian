@@ -2,12 +2,14 @@ package com.sacak.forumcivillian.controller;
 
 import com.sacak.forumcivillian.dto.request.NewPostRequest;
 import com.sacak.forumcivillian.dto.response.BaseResponse;
-import com.sacak.forumcivillian.dto.response.PostResponse;
-import com.sacak.forumcivillian.entity.Post;
 import com.sacak.forumcivillian.service.PostService;
+import com.sacak.forumcivillian.views.VwAllPost;
+import com.sacak.forumcivillian.views.VwPost;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 import static com.sacak.forumcivillian.constants.RestApis.*;
 
@@ -28,13 +30,28 @@ public class PostController {
                 .build());
     }
 
-    @GetMapping("/get-post")
-    public ResponseEntity<BaseResponse<PostResponse>> getPost(@RequestParam Long postId){
-        return ResponseEntity.ok(BaseResponse.<PostResponse>builder()
-                        .code(200)
-                        .success(true)
-                        .message("Post found")
-                        .data(postService.getPost(postId))
+    @GetMapping("get-all-posts-on-topic")
+    public ResponseEntity<BaseResponse<List<VwAllPost>>> getAllPostsOnTopic(@RequestParam Long topicId){
+        return ResponseEntity.ok(BaseResponse.<List<VwAllPost>>builder()
+                .code(200)
+                .success(true)
+                .message("All posts on topic") //in the future not all posts but limited posts per page will be shown.
+                .data(postService.getAllPostsOnTopic(topicId))
                 .build());
     }
+
+    @GetMapping("get-post")
+    public ResponseEntity<BaseResponse<VwPost>> getPost(@RequestParam Long postId){
+        return ResponseEntity.ok(BaseResponse.<VwPost>builder()
+                .code(200)
+                .success(true)
+                .message("Post")
+                .data(postService.getPostById(postId))
+                .build());
+    }
+
+
+
+
+
 }

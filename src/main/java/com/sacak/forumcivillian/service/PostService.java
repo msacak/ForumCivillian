@@ -1,22 +1,21 @@
 package com.sacak.forumcivillian.service;
 
 import com.sacak.forumcivillian.dto.request.NewPostRequest;
-import com.sacak.forumcivillian.dto.response.PostResponse;
 import com.sacak.forumcivillian.entity.Comment;
 import com.sacak.forumcivillian.entity.Post;
 import com.sacak.forumcivillian.entity.User;
 import com.sacak.forumcivillian.exceptions.ErrorType;
 import com.sacak.forumcivillian.exceptions.ForumCivillianException;
-import com.sacak.forumcivillian.repository.CommentRepository;
 import com.sacak.forumcivillian.repository.PostRepository;
 import com.sacak.forumcivillian.utility.JwtManager;
+import com.sacak.forumcivillian.views.VwAllPost;
 import com.sacak.forumcivillian.views.VwComment;
+import com.sacak.forumcivillian.views.VwPost;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
-import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,6 +36,8 @@ public class PostService {
         Post post = Post.builder()
                 .title(dto.title())
                 .userId(userIdOpt.get())
+                .lastReplier(userOptional.get().getUserName())
+                .commentCount(1)
                 .build();
         postRepository.save(post);
         Comment comment = Comment.builder()
@@ -45,30 +46,27 @@ public class PostService {
                 .userId(userIdOpt.get())
                 .imageUrl(dto.imageUrl())
                 .build();
-        commentService.saveCommentForNewPost(comment);
+        commentService.save(comment);
         return true;
 
     }
 
-    public PostResponse getPost(Long postId) {
-        Optional<Post> postOptional = postRepository.findById(postId);
-        if(postOptional.isEmpty()) throw new ForumCivillianException(ErrorType.POST_NOT_FOUND);
-        Post post = postOptional.get();
-        Optional<User> userOptional = userService.findById(post.getUserId());
-        if(userOptional.isEmpty()) throw new ForumCivillianException(ErrorType.USER_NOT_FOUND);
-        User user = userOptional.get();
-        PostResponse postResponse = PostResponse.builder()
-                .id(post.getId())
-                .title(post.getTitle())
-                .updatedAt(Instant.ofEpochMilli(post.getUpdateAt()).atZone(ZoneId.systemDefault()).toLocalDateTime())
-                .createdAt(Instant.ofEpochMilli(post.getCreateAt()).atZone(ZoneId.systemDefault()).toLocalDateTime())
-                .author(user.getUserName())
-                .build();
+    public List<VwAllPost> getAllPostsOnTopic(Long topicId) {
+        return postRepository.findAllByTopicId(topicId);
+    }
 
+    public VwPost getPostById(Long postId) {
+        System.out.println(postId);
+        Post post = postRepository.findById(postId).orElseThrow(()-> new ForumCivillianException(ErrorType.POST_NOT_FOUND));
         List<VwComment> commentList = commentService.findAllCommentsOfPost(postId);
-        postResponse.setCommentList(commentList);
-        postResponse.setLastReplier(commentList.getLast().author());
-        return postResponse;
+        String author = userService.findUserNameByUserId(post.getUserId());
+
+        return VwPost.builder()
+                .id(postId)
+                .author(author)
+                .title(post.getTitle())
+                .commentList(commentList)
+                .build();
     }
 
 

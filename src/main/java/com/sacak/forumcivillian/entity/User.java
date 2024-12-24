@@ -41,5 +41,6 @@ public class User extends BaseEntity {
     @Builder.Default
     @Enumerated(EnumType.STRING)
     EUserRank userRank = EUserRank.PEASANT;
+    int totalComments;
 
 }

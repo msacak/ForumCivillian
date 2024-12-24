@@ -1,5 +1,6 @@
 package com.sacak.forumcivillian.views;
 
+import com.sacak.forumcivillian.entity.Comment;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -7,22 +8,17 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Data
-public class VwUser {
+public class VwPost {
+
     Long id;
-    String firstName;
-    String lastName;
-    String email;
-    String userName;
-    String avatar;
-    LocalDate birthday;
-    String phone;
-    String address;
-    String about;
-    int totalComments;
+    String author;
+    String title;
+    List<VwComment> commentList;
 }
