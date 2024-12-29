@@ -15,6 +15,9 @@ import com.sacak.forumcivillian.views.VwPost;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -62,8 +65,25 @@ public class PostService {
 
     }
 
-    public List<VwAllPost> getAllPostsOnTopic(Long topicId) {
-        return postRepository.findAllByTopicId(topicId);
+    public List<VwAllPost> get5TopPostByTopicId(Long topicId) {
+        return postRepository.get5TopPostByTopicId(topicId);
+    }
+
+    public Page<VwAllPost> findAllPostsByTopicId(Long topicId, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return postRepository.findByTopicIdOrderByUpdateAtDesc(topicId, pageable)
+                .map(post -> {
+                    User user = userService.findById(post.getUserId());
+                    return new VwAllPost(
+                            post.getId(),
+                            user.getUserName(),
+                            post.getLastReplier(),
+                            post.getTitle(),
+                            post.getCreateAt(),
+                            post.getUpdateAt(),
+                            post.getTotalComments()
+                    );
+                });
     }
 
     public VwPost getPostById(Long postId) {

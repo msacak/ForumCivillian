@@ -32,9 +32,9 @@ public class TopicController {
     }
 
     @GetMapping("get-topic")
-    public ResponseEntity<BaseResponse<VwTopic>> getTopicById(@RequestParam Long topicId){
+    public ResponseEntity<BaseResponse<VwTopic>> getTopicById(@RequestParam Long topicId,@RequestParam int  page,@RequestParam int  size){
         return ResponseEntity.ok(BaseResponse.<VwTopic>builder()
-                        .data(topicService.getVwTopicByTopicId(topicId))
+                        .data(topicService.getVwTopicByTopicId(topicId,page,size))
                         .success(true)
                         .message("Topic with id " + topicId)
                         .code(200)

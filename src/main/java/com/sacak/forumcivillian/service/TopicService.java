@@ -7,6 +7,7 @@ import com.sacak.forumcivillian.repository.TopicRepository;
 import com.sacak.forumcivillian.views.VwAllPost;
 import com.sacak.forumcivillian.views.VwTopic;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -23,15 +24,15 @@ public class TopicService {
         List<Topic> topics = topicRepository.findAll();
         for (Topic topic : topics) {
             List<VwAllPost> vwAllPosts = postService.get5TopPostByTopicId(topic.getId());
-            vwTopics.add(new VwTopic(topic.getId(),topic.getTopicName(),vwAllPosts));
+            vwTopics.add(new VwTopic(topic.getId(),topic.getTopicName(),vwAllPosts,1)); // ???
         }
         return vwTopics;
     }
 
-    public VwTopic getVwTopicByTopicId(Long topicId) {
+    public VwTopic getVwTopicByTopicId(Long topicId,int page,int size) {
         Topic topic = topicRepository.findById(topicId).orElseThrow(()->new ForumCivillianException(ErrorType.TOPIC_NOT_FOUND));
-        List<VwAllPost> vwAllPosts = postService.findAllPostsByTopicId(topicId);
-        return new VwTopic(topic.getId(),topic.getTopicName(),vwAllPosts);
+        Page<VwAllPost> vwAllPosts = postService.findAllPostsByTopicId(topicId,page,size);
+        return new VwTopic(topic.getId(),topic.getTopicName(), vwAllPosts.getContent(),vwAllPosts.getTotalPages());
     }
 
 }

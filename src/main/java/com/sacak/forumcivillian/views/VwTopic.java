@@ -6,7 +6,8 @@ public record VwTopic(
 
         Long id,
         String topicName,
-        List<VwAllPost> postList
+        List<VwAllPost> postList,
+        int totalPage
 
 
 ) {

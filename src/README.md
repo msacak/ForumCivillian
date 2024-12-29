@@ -13,4 +13,4 @@ username: horns
 password: sifre123
 
 ## Notlar
-Comment atıldığında userin totalCommentsi ve derecesini güncelle.
+PostPage içinde pagination koyulacak, header login kısmında kullanıcı login olduysa ismi de gözüksün.
