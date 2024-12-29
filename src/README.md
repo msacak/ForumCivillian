@@ -12,5 +12,9 @@ password: sifre123
 username: horns
 password: sifre123
 
-## Notlar
-PostPage içinde pagination koyulacak, header login kısmında kullanıcı login olduysa ismi de gözüksün.
+## TODO
+- Forgot Password option. 
+- Pagination for comments in Post Page.
+- Search button in homepage.
+- Button that allows user to create new post from homepage, selecting topic from list.
+- Try to deploy project on AWS.

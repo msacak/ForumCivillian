@@ -47,6 +47,7 @@ public class PostService {
         Post post = Post.builder()
                 .title(dto.title())
                 .userId(userId)
+                .topicId(dto.topicId())
                 .lastReplier(user.getUserName())
                 .totalComments(1)
                 .build();
