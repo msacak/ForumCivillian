@@ -4,6 +4,7 @@ import com.sacak.forumcivillian.dto.request.RegisterRequest;
 import com.sacak.forumcivillian.dto.request.UserLoginRequest;
 import com.sacak.forumcivillian.entity.User;
 import com.sacak.forumcivillian.entity.VerificationToken;
+import com.sacak.forumcivillian.entity.enums.EUserRank;
 import com.sacak.forumcivillian.entity.enums.EUserRole;
 import com.sacak.forumcivillian.exceptions.ErrorType;
 import com.sacak.forumcivillian.exceptions.ForumCivillianException;
@@ -102,11 +103,16 @@ public class UserService {
     }
 
 
-    public Optional<User> findById(Long id) {
-        return userRepository.findById(id);
+    public User findById(Long id) {
+        return userRepository.findById(id).orElseThrow(()-> new ForumCivillianException(ErrorType.USER_NOT_FOUND));
     }
 
     public String findUserNameByUserId(Long userId) {
         return userRepository.findUsernameByUserId(userId).orElseThrow(()-> new ForumCivillianException(ErrorType.USER_NOT_FOUND));
+    }
+
+
+    public void save(User user) {
+        userRepository.save(user);
     }
 }

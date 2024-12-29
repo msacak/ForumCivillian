@@ -10,21 +10,21 @@ public class PostGenerator {
                 .title("The benefits of planting trees")
                 .userId(1L)
                 .topicId(1L)
-                .commentCount(1)
+                .totalComments(1)
                 .lastReplier("specialist")
                 .build();
         Post post2 = Post.builder()
                 .title("Top 5 movies to watch on a rainy day")
                 .userId(2L)
                 .topicId(1L)
-                .commentCount(1)
+                .totalComments(1)
                 .lastReplier("karaceki")
                 .build();
         Post post3 = Post.builder()
                 .title("Best way to decorate your living room for winter")
                 .userId(3L)
                 .topicId(1L)
-                .commentCount(1)
+                .totalComments(1)
                 .lastReplier("specialist")
                 .build();
 
@@ -32,7 +32,7 @@ public class PostGenerator {
                 .title("The evolution of music genres over the decades")
                 .userId(1L)
                 .topicId(1L)
-                .commentCount(1)
+                .totalComments(1)
                 .lastReplier("horns")
                 .build();
 
@@ -40,7 +40,7 @@ public class PostGenerator {
                 .title("The Rise of Esports: A New Era in Competitive Sports")
                 .userId(1L)
                 .topicId(2L)  // Topic ID set to 2L for sports
-                .commentCount(10)
+                .totalComments(10)
                 .lastReplier("JaneSmith")
                 .build();
 
@@ -48,7 +48,7 @@ public class PostGenerator {
                 .title("Top 5 Football Players to Watch in 2024")
                 .userId(2L)
                 .topicId(2L)
-                .commentCount(15)
+                .totalComments(15)
                 .lastReplier("SarahJ")
                 .build();
 
@@ -56,7 +56,7 @@ public class PostGenerator {
                 .title("Analyzing the Future of Basketball in Europe")
                 .userId(3L)
                 .topicId(2L)
-                .commentCount(12)
+                .totalComments(12)
                 .lastReplier("AnnaLee")
                 .build();
 
@@ -64,7 +64,7 @@ public class PostGenerator {
                 .title("Why Track and Field Athletes Are the Unsung Heroes")
                 .userId(1L)
                 .topicId(2L)
-                .commentCount(13)
+                .totalComments(13)
                 .lastReplier("DavidW")
                 .build();
 
