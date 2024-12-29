@@ -13,6 +13,7 @@ import com.sacak.forumcivillian.views.VwAllPost;
 import com.sacak.forumcivillian.views.VwComment;
 import com.sacak.forumcivillian.views.VwPost;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
@@ -61,12 +62,8 @@ public class PostService {
 
     }
 
-    public List<VwAllPost> get5TopPostByTopicId(Long topicId) {
-        return postRepository.findTop5PostsByTopicId(topicId);
-    }
-
-    public List<VwAllPost> findAllPostsByTopicId(Long topicId) {
-        return postRepository.findALlPostByTopicId(topicId);
+    public List<VwAllPost> getAllPostsOnTopic(Long topicId) {
+        return postRepository.findAllByTopicId(topicId);
     }
 
     public VwPost getPostById(Long postId) {
