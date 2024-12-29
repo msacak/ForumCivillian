@@ -5,6 +5,7 @@ import com.sacak.forumcivillian.entity.Topic;
 import com.sacak.forumcivillian.service.TopicService;
 import com.sacak.forumcivillian.views.VwTopic;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +28,16 @@ public class TopicController {
                 .success(true)
                 .message("All topics")
                 .data(topicService.getAllTopics())
+                .build());
+    }
+
+    @GetMapping("get-topic")
+    public ResponseEntity<BaseResponse<VwTopic>> getTopicById(@RequestParam Long topicId){
+        return ResponseEntity.ok(BaseResponse.<VwTopic>builder()
+                        .data(topicService.getVwTopicByTopicId(topicId))
+                        .success(true)
+                        .message("Topic with id " + topicId)
+                        .code(200)
                 .build());
     }
 }

@@ -16,7 +16,8 @@ public enum ErrorType {
     WRONG_PASSWORD(4004,"Wrong password", HttpStatus.BAD_REQUEST),
     INVALID_TOKEN(4005,"Invalid token",HttpStatus.BAD_REQUEST),
     ADMIN_NOT_FOUND(9001,"Admin not found", HttpStatus.BAD_REQUEST),
-    POST_NOT_FOUND(5001,"Post not found", HttpStatus.BAD_REQUEST),
+    POST_NOT_FOUND(5001,"Post not found", HttpStatus.NOT_FOUND),
+    TOPIC_NOT_FOUND(6001,"Topic not found", HttpStatus.NOT_FOUND),
     ;
 
     int code;

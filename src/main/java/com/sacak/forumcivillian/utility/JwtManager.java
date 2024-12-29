@@ -60,6 +60,8 @@ public class JwtManager {
                 .sign(algorithm);
     }
 
+
+
     public Optional<Long> validateToken(String token) {
         try {
             JWTVerifier verifier = JWT.require(algorithm).build();

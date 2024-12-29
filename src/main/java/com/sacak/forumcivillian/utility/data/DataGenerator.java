@@ -57,6 +57,7 @@ public class DataGenerator {
                 .userName("specialist")
                 .password(encryptionService.encryptPassword("sifre123"))
                 .totalComments(15)
+                .isVerified(true)
                 .build();
         User user2 = User.builder()
                 .email("user2@gmail.com")
@@ -64,6 +65,7 @@ public class DataGenerator {
                 .userName("karaceki")
                 .password(encryptionService.encryptPassword("sifre123"))
                 .totalComments(27)
+                .isVerified(true)
                 .build();
         User user3 = User.builder()
                 .email("user3@gmail.com")
@@ -71,6 +73,7 @@ public class DataGenerator {
                 .userName("horns")
                 .password(encryptionService.encryptPassword("sifre123"))
                 .totalComments(165)
+                .isVerified(true)
                 .build();
         return List.of(user1, user2, user3);
     }

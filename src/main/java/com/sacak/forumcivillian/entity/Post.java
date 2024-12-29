@@ -18,7 +18,7 @@ public class Post extends BaseEntity {
     Long userId;
     Long topicId;
     String title;
-    Integer commentCount;
+    Integer totalComments;
     String lastReplier;
 
 }

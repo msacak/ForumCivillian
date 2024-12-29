@@ -36,7 +36,7 @@ public class PostController {
                 .code(200)
                 .success(true)
                 .message("All posts on topic") //in the future not all posts but limited posts per page will be shown.
-                .data(postService.getAllPostsOnTopic(topicId))
+                .data(postService.get5TopPostByTopicId(topicId))
                 .build());
     }
 
