@@ -27,7 +27,6 @@ public class UserController {
                     .message("Account is now verified")
                     .build());
         }
-        System.out.println("sjakfjkas");
         return ResponseEntity.status(HttpStatus.CONFLICT).build(); //user already verified or token doesn't exist
     }
 }

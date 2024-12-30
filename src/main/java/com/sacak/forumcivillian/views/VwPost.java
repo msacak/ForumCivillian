@@ -11,14 +11,16 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-@Data
-public class VwPost {
+public record VwPost(
 
-    Long id;
-    String author;
-    String title;
-    List<VwComment> commentList;
+        Long id,
+        String author,
+        String title,
+        List<VwComment> commentList,
+        int totalPage
+) {
+
+
+
+
 }

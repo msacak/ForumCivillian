@@ -20,7 +20,7 @@ public class EmailService {
     private final UserRepository userRepository;
 
 
-    private String fromAddress = "no-reply@amateurbet.com";
+    private String fromAddress = "no-reply@forumcivillian.com";
     private String url = "http://localhost:9090/v1/dev";
 
     private SimpleMailMessage makeMailMessage(){
@@ -45,5 +45,14 @@ public class EmailService {
     }
 
 
+    public void sendResetPasswordMail(String email, String token) {
+        SimpleMailMessage message = makeMailMessage();
+        message.setTo(email);
+        message.setFrom(fromAddress);
+        message.setSubject("Reset your password");
+        message.setText("Please follow the link below to reset your password.\n"
+                +"http://localhost:3000/reset-password/"+token);
+        mailSender.send(message);
 
+    }
 }

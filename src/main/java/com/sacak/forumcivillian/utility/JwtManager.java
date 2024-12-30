@@ -17,6 +17,11 @@ public class JwtManager {
     private String issuer = "ForumCivillian";
     private final Long exDate = 1000L*60*60; //60mins for token expiration
 
+    private final String RESET_PASSWORD_EMAIL_KEY = "RESET_PASSWORD_EMAIL_KEY";
+
+    Date createdDate = new Date(System.currentTimeMillis());
+    Date expirationDate = new Date(System.currentTimeMillis() + exDate);
+
     private static final String VERIFICATION_EMAIL_KEY = "VERIFICATION_EMAIL";
 
     Algorithm algorithm = Algorithm.HMAC512(secretKey);
@@ -38,8 +43,7 @@ public class JwtManager {
     }
 
     public String createAdminToken(Long adminId, String email) {
-        Date createdDate = new Date(System.currentTimeMillis());
-        Date expirationDate = new Date(System.currentTimeMillis() + exDate);
+
 
         return JWT.create()
                 .withIssuer(issuer)
@@ -58,6 +62,17 @@ public class JwtManager {
                 .withExpiresAt(new Date(System.currentTimeMillis() + (exDate)))
                 .withIssuer(issuer)
                 .sign(algorithm);
+    }
+
+
+    public String createResetPasswordToken(String email) {
+        return JWT.create()
+                .withIssuer(issuer)
+                .withIssuedAt(createdDate)
+                .withExpiresAt(expirationDate)
+                .withClaim(RESET_PASSWORD_EMAIL_KEY,email)
+                .sign(algorithm);
+
     }
 
 
@@ -81,5 +96,12 @@ public class JwtManager {
         catch (Exception e) {
             return Optional.empty();
         }
+    }
+
+    public Optional<String> validatePasswordResetToken(String token) {
+        DecodedJWT jwt = JWT.require(algorithm).build().verify(token);
+        if(Objects.isNull(jwt)) return Optional.empty();
+        return Optional.of(jwt.getClaim("RESET_PASSWORD_EMAIL_KEY").asString());
+
     }
 }

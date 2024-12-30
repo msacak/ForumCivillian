@@ -1,6 +1,7 @@
 package com.sacak.forumcivillian.repository;
 
 import com.sacak.forumcivillian.entity.User;
+import com.sacak.forumcivillian.entity.enums.EState;
 import com.sacak.forumcivillian.views.VwUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,4 +17,7 @@ public interface UserRepository extends JpaRepository<User,Long> {
 
     @Query("SELECT u.userName FROM User u WHERE u.id=?1")
     Optional<String> findUsernameByUserId(Long userId);
+
+    Optional<User> findByEmailAndState(String email, EState state);
+
 }

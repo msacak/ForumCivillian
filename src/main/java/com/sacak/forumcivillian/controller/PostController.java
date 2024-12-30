@@ -30,23 +30,38 @@ public class PostController {
                 .build());
     }
 
-    @GetMapping("get-all-posts-on-topic")
-    public ResponseEntity<BaseResponse<List<VwAllPost>>> getAllPostsOnTopic(@RequestParam Long topicId){
-        return ResponseEntity.ok(BaseResponse.<List<VwAllPost>>builder()
-                .code(200)
-                .success(true)
-                .message("All posts on topic") //in the future not all posts but limited posts per page will be shown.
-                .data(postService.get5TopPostByTopicId(topicId))
-                .build());
-    }
+//    @GetMapping("get-all-posts-on-topic")
+//    public ResponseEntity<BaseResponse<List<VwAllPost>>> getAllPostsOnTopic(@RequestParam Long topicId){
+//        return ResponseEntity.ok(BaseResponse.<List<VwAllPost>>builder()
+//                .code(200)
+//                .success(true)
+//                .message("All posts on topic") //in the future not all posts but limited posts per page will be shown.
+//                .data(postService.get5TopPostByTopicId(topicId))
+//                .build());
+//    }
 
     @GetMapping("get-post")
-    public ResponseEntity<BaseResponse<VwPost>> getPost(@RequestParam Long postId){
+    public ResponseEntity<BaseResponse<VwPost>> getPost(@RequestParam Long postId,@RequestParam int page,@RequestParam int size){
         return ResponseEntity.ok(BaseResponse.<VwPost>builder()
                 .code(200)
                 .success(true)
                 .message("Post")
-                .data(postService.getPostById(postId))
+                .data(postService.getPostById(postId,page,size))
+                .build());
+    }
+
+    @GetMapping("search-post")
+    public ResponseEntity<BaseResponse<List<VwAllPost>>> getPosts(
+            @RequestParam String query,
+            @RequestParam(defaultValue = "20") int limit,
+            @RequestParam(defaultValue = "0") int offset) {
+
+        List<VwAllPost> posts = postService.findAllVwPostsByQuery(query, limit, offset);
+        return ResponseEntity.ok(BaseResponse.<List<VwAllPost>>builder()
+                .code(200)
+                .success(true)
+                .message("Search results")
+                .data(posts)
                 .build());
     }
 

@@ -5,6 +5,7 @@ import com.sacak.forumcivillian.dto.request.NewPostRequest;
 import com.sacak.forumcivillian.entity.Comment;
 import com.sacak.forumcivillian.entity.Post;
 import com.sacak.forumcivillian.entity.User;
+import com.sacak.forumcivillian.entity.enums.EState;
 import com.sacak.forumcivillian.exceptions.ErrorType;
 import com.sacak.forumcivillian.exceptions.ForumCivillianException;
 import com.sacak.forumcivillian.repository.PostRepository;
@@ -13,7 +14,6 @@ import com.sacak.forumcivillian.views.VwAllPost;
 import com.sacak.forumcivillian.views.VwComment;
 import com.sacak.forumcivillian.views.VwPost;
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -72,7 +72,7 @@ public class PostService {
 
     public Page<VwAllPost> findAllPostsByTopicId(Long topicId, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return postRepository.findByTopicIdOrderByUpdateAtDesc(topicId, pageable)
+        return postRepository.findByTopicIdAndStateOrderByUpdateAtDesc(topicId, pageable, EState.ACTIVE)
                 .map(post -> {
                     User user = userService.findById(post.getUserId());
                     return new VwAllPost(
@@ -87,17 +87,18 @@ public class PostService {
                 });
     }
 
-    public VwPost getPostById(Long postId) {
+    public VwPost getPostById(Long postId,int page,int size) {
         Post post = postRepository.findById(postId).orElseThrow(()-> new ForumCivillianException(ErrorType.POST_NOT_FOUND));
-        List<VwComment> commentList = commentService.findAllCommentsOfPost(postId);
+        Page<VwComment> commentList = commentService.findAllCommentsByPostId(postId,page,size);
         String author = userService.findUserNameByUserId(post.getUserId());
 
-        return VwPost.builder()
-                .id(postId)
-                .author(author)
-                .title(post.getTitle())
-                .commentList(commentList)
-                .build();
+        return new VwPost(postId,author,post.getTitle(),commentList.getContent(),commentList.getTotalPages());
+    }
+
+    public List<VwAllPost> findAllVwPostsByQuery(String query, int maxResult, int offSet) {
+        System.out.println(query);
+        return postRepository.findAllVwPostsByQuery(query,maxResult,offSet);
+
     }
 
 

@@ -13,8 +13,7 @@ username: horns
 password: sifre123
 
 ## TODO
-- Forgot Password option. 
-- Pagination for comments in Post Page.
-- Search button in homepage.
+
 - Button that allows user to create new post from homepage, selecting topic from list.
+- Admin page, admin and moderator authorization for user ban, post freeze, deletions etc.
 - Try to deploy project on AWS.

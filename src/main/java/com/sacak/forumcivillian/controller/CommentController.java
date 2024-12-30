@@ -29,15 +29,7 @@ public class CommentController {
                 .build());
     }
 
-    @GetMapping("get-all-post-comments")
-    public ResponseEntity<BaseResponse<List<VwComment>>> getAllPostComments(@RequestParam Long postId) {
-        return ResponseEntity.ok(BaseResponse.<List<VwComment>>builder()
-                .code(200)
-                .success(true)
-                .data(commentService.findAllCommentsOfPost(postId))
-                .message("Comments on post displayed")
-                .build());
-    }
+
 
 
 }

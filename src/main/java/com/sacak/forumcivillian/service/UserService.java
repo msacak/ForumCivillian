@@ -1,9 +1,11 @@
 package com.sacak.forumcivillian.service;
 
 import com.sacak.forumcivillian.dto.request.RegisterRequest;
+import com.sacak.forumcivillian.dto.request.ResetPasswordRequest;
 import com.sacak.forumcivillian.dto.request.UserLoginRequest;
 import com.sacak.forumcivillian.entity.User;
 import com.sacak.forumcivillian.entity.VerificationToken;
+import com.sacak.forumcivillian.entity.enums.EState;
 import com.sacak.forumcivillian.entity.enums.EUserRank;
 import com.sacak.forumcivillian.entity.enums.EUserRole;
 import com.sacak.forumcivillian.exceptions.ErrorType;
@@ -101,6 +103,26 @@ public class UserService {
         }
         return false;
     }
+
+    public Boolean forgotPassword(String email){
+        Optional<User> userOpt = userRepository.findByEmailAndState(email,EState.ACTIVE);
+        if(userOpt.isPresent()){
+            String token = jwtManager.createResetPasswordToken(email);
+            emailService.sendResetPasswordMail(email,token);
+            return true;
+        }
+        throw new ForumCivillianException(ErrorType.EMAIL_NOT_FOUND);
+    }
+
+    public Boolean resetPassword(String token, ResetPasswordRequest dto){
+        String email = jwtManager.validatePasswordResetToken(token).orElseThrow(()->new ForumCivillianException(ErrorType.INVALID_TOKEN));
+        User user = userRepository.findByEmailAndState(email,EState.ACTIVE).orElseThrow(()->new ForumCivillianException(ErrorType.USER_NOT_FOUND));
+        if(!dto.password().equals(dto.rePassword())) throw new ForumCivillianException(ErrorType.PASSWORDS_DO_NOT_MATCH);
+        user.setPassword(encryptionService.encryptPassword(dto.password()));
+        userRepository.save(user);
+        return true;
+    }
+
 
 
     public User findById(Long id) {

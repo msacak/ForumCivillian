@@ -5,6 +5,7 @@ import com.sacak.forumcivillian.dto.request.NewCommentRequest;
 import com.sacak.forumcivillian.entity.Comment;
 import com.sacak.forumcivillian.entity.Post;
 import com.sacak.forumcivillian.entity.User;
+import com.sacak.forumcivillian.entity.enums.EState;
 import com.sacak.forumcivillian.exceptions.ErrorType;
 import com.sacak.forumcivillian.exceptions.ForumCivillianException;
 import com.sacak.forumcivillian.repository.CommentRepository;
@@ -12,8 +13,10 @@ import com.sacak.forumcivillian.utility.JwtManager;
 import com.sacak.forumcivillian.views.VwComment;
 import jakarta.transaction.Transactional;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import java.util.List;
 
 @Service
 public class CommentService {
@@ -56,8 +59,22 @@ public class CommentService {
     }
 
 
-    public List<VwComment> findAllCommentsOfPost(Long postId) {
-        return commentRepository.finAllVwCommentsByPostId(postId);
+    public Page<VwComment> findAllCommentsByPostId(Long postId, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+
+        return commentRepository.findAllByPostIdAndStateOrderByCreateAt(postId,pageable,EState.ACTIVE)
+                .map(comment -> {
+                    User user = userService.findById(comment.getUserId());
+                    return new VwComment(
+                            comment.getId(),
+                            user.getUserName(),
+                            user.getTotalComments(),
+                            user.getAvatar(),
+                            user.getUserRank(),
+                            comment.getContent(),comment.
+                            getImageUrl(),comment.getCreateAt(),
+                            comment.getUpdateAt());
+                });
 
     }
 
