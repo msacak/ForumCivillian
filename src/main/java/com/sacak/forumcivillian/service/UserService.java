@@ -14,6 +14,7 @@ import com.sacak.forumcivillian.repository.UserRepository;
 import com.sacak.forumcivillian.repository.VerificationTokenRepository;
 import com.sacak.forumcivillian.utility.EncryptionService;
 import com.sacak.forumcivillian.utility.JwtManager;
+import com.sacak.forumcivillian.views.VwUserProfilePage;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -67,6 +68,7 @@ public class UserService {
             User user = userOpt.get();
             if(encryptionService.checkPassword(dto.password(), user.getPassword())){
                 if(user.getIsVerified()){
+                    user.setUpdateAt(System.currentTimeMillis()); // for Last seen feature in frontpage
                     return jwtManager.createUserToken(user.getId());
                 }
                 else{
@@ -121,6 +123,14 @@ public class UserService {
         user.setPassword(encryptionService.encryptPassword(dto.password()));
         userRepository.save(user);
         return true;
+    }
+
+    public VwUserProfilePage findVwUserProfile(Long userId){
+        if(userRepository.existsById(userId)){
+            return userRepository.findVwUserProfilePageById(userId);
+        }
+        throw new ForumCivillianException(ErrorType.USER_NOT_FOUND);
+
     }
 
 

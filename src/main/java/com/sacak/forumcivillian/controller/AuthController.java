@@ -43,6 +43,21 @@ public class AuthController {
                 .build());
     }
 
+    @GetMapping("/verify")
+    //Normally it was @PostMapping, changed it to see if i can just copy-paste verification link to browser and set isVerified parameter true.
+    public ResponseEntity<BaseResponse<String>> verifyEmail(@RequestParam String token) {
+        if (userService.verifyUser(token)) {
+            return ResponseEntity.ok(BaseResponse.<String>builder()
+                    .data("Mail verification successful")
+                    .success(true)
+                    .code(200)
+                    .message("Account is now verified")
+                    .build());
+        }
+        return ResponseEntity.status(HttpStatus.CONFLICT).build(); //user already verified or token doesn't exist
+    }
+
+
     @GetMapping("/forgot-password")
     public ResponseEntity<BaseResponse<Boolean>> forgotPassword(@RequestParam String email) {
         return ResponseEntity.ok(BaseResponse.<Boolean>builder()

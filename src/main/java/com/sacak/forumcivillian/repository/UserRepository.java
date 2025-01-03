@@ -3,6 +3,7 @@ package com.sacak.forumcivillian.repository;
 import com.sacak.forumcivillian.entity.User;
 import com.sacak.forumcivillian.entity.enums.EState;
 import com.sacak.forumcivillian.views.VwUser;
+import com.sacak.forumcivillian.views.VwUserProfilePage;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -20,4 +21,6 @@ public interface UserRepository extends JpaRepository<User,Long> {
 
     Optional<User> findByEmailAndState(String email, EState state);
 
+    @Query("SELECT NEW com.sacak.forumcivillian.views.VwUserProfilePage(u.userName,u.email,u.about,u.avatar,u.totalComments,u.updateAt,u.createAt) FROM User u WHERE u.id = ?1")
+    VwUserProfilePage findVwUserProfilePageById(Long id);
 }

@@ -39,16 +39,12 @@ public class EmailService {
                     url+"/user/verify?token="+verificationToken.getToken());
             mailSender.send(message);
         }
-
-        //throw something ??
-
     }
 
 
     public void sendResetPasswordMail(String email, String token) {
         SimpleMailMessage message = makeMailMessage();
         message.setTo(email);
-        message.setFrom(fromAddress);
         message.setSubject("Reset your password");
         message.setText("Please follow the link below to reset your password.\n"
                 +"http://localhost:3000/reset-password/"+token);

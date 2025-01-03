@@ -96,7 +96,6 @@ public class PostService {
     }
 
     public List<VwAllPost> findAllVwPostsByQuery(String query, int maxResult, int offSet) {
-        System.out.println(query);
         return postRepository.findAllVwPostsByQuery(query,maxResult,offSet);
 
     }

@@ -59,7 +59,7 @@ public class CommentService {
     }
 
 
-    public Page<VwComment> findAllCommentsByPostId(Long postId, int page, int size) {
+    public Page<VwComment>  findAllCommentsByPostId(Long postId, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
 
         return commentRepository.findAllByPostIdAndStateOrderByCreateAt(postId,pageable,EState.ACTIVE)

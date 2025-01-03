@@ -13,7 +13,6 @@ username: horns
 password: sifre123
 
 ## TODO
-
 - Button that allows user to create new post from homepage, selecting topic from list.
 - Admin page, admin and moderator authorization for user ban, post freeze, deletions etc.
 - Try to deploy project on AWS.
